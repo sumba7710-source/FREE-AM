@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ALIGHT PREMIUM · DARK CYBER</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            background: #0a0a0f;
+            background-image: 
+                radial-gradient(circle at 20% 50%, rgba(0, 255, 200, 0.03) 0%, transparent 60%),
+                radial-gradient(circle at 80% 20%, rgba(255, 0, 200, 0.03) 0%, transparent 60%),
+                repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0, 255, 200, 0.02) 2px, rgba(0, 255, 200, 0.02) 4px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: rgba(12, 12, 20, 0.92);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(0, 255, 200, 0.15);
+            border-radius: 24px;
+            padding: 40px;
+            max-width: 560px;
+            width: 100%;
+            box-shadow: 0 0 60px rgba(0, 255, 200, 0.05), inset 0 0 60px rgba(0, 255, 200, 0.02);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .container::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: conic-gradient(from 0deg at 50% 50%, transparent, rgba(0, 255, 200, 0.03), transparent, rgba(255, 0, 200, 0.03), transparent);
+            animation: rotateGlow 20s linear infinite;
+            pointer-events: none;
+        }
+
+        @keyframes rotateGlow {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 32px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .header .icon {
+            font-size: 48px;
+            display: block;
+            margin-bottom: 8px;
+            filter: drop-shadow(0 0 20px rgba(0, 255, 200, 0.3));
+        }
+
+        .header h1 {
+            font-size: 28px;
+            font-weight: 700;
+            background: linear-gradient(135deg, #00ffc8, #00ccff, #a855f7);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .header p {
+            color: rgba(255, 255, 255, 0.4);
+            font-size: 13px;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            margin-top: 4px;
+        }
+
+        .status-bar {
+            background: rgba(0, 255, 200, 0.05);
+            border: 1px solid rgba(0, 255, 200, 0.1);
+            border-radius: 12px;
+            padding: 12px 16px;
+            margin-bottom: 24px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.6);
+            position: relative;
+            z-index: 1;
+        }
+
+        .status-bar .dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #00ffc8;
+            animation: pulseDot 2s infinite;
+            flex-shrink: 0;
+        }
+
+        @keyframes pulseDot {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.3; transform: scale(0.8); }
+        }
+
+        .status-bar .label {
+            font-weight: 600;
+            color: #00ffc8;
+        }
+
+        .step-indicator {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            margin-bottom: 28px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .step-indicator .step {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.3);
+            transition: 0.3s;
+        }
+
+        .step-indicator .step.active {
+            color: #00ffc8;
+        }
+
+        .step-indicator .step .num {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: 700;
+            transition: 0.3s;
+        }
+
+        .step-indicator .step.active .num {
+            border-color: #00ffc8;
+            background: rgba(0, 255, 200, 0.1);
+            box-shadow: 0 0 20px rgba(0, 255, 200, 0.15);
+        }
+
+        .step-indicator .divider {
+            color: rgba(255, 255, 255, 0.08);
+            font-size: 18px;
+            display: flex;
+            align-items: center;
+        }
+
+        .form-group {
+            position: relative;
+            z-index: 1;
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 12px;
+            font-weight: 600;
+            color: rgba(255, 255, 255, 0.4);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 8px;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 14px 18px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 12px;
+            color: #fff;
+            font-size: 15px;
+            transition: 0.3s;
+            outline: none;
+        }
+
+        .form-group input:focus {
+            border-color: rgba(0, 255, 200, 0.3);
+            background: rgba(255, 255, 255, 0.05);
+            box-shadow: 0 0 30px rgba(0, 255, 200, 0.05);
+        }
+
+        .form-group input::placeholder {
+            color: rgba(255, 255, 255, 0.2);
+        }
+
+        .btn {
+            width: 100%;
+            padding: 16px;
+            border: none;
+            border-radius: 12px;
+            font-size: 15px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            cursor: pointer;
+            transition: 0.3s;
+            position: relative;
+            z-index: 1;
+            background: linear-gradient(135deg, #00ffc8, #00ccff);
+            color: #0a0a0f;
+            box-shadow: 0 0 40px rgba(0, 255, 200, 0.15);
+        }
+
+        .btn:hover {
+            transform: scale(1.01);
+            box-shadow: 0 0 60px rgba(0, 255, 200, 0.25);
+        }
+
+        .btn:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.03);
+            color: rgba(255, 255, 255, 0.6);
+            box-shadow: none;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            margin-top: 12px;
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.06);
+            box-shadow: none;
+        }
+
+        .output-box {
+            margin-top: 24px;
+            padding: 16px 20px;
+            background: rgba(0, 255, 200, 0.03);
+            border: 1px solid rgba(0, 255, 200, 0.06);
+            border-radius: 12px;
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.5);
+            min-height: 60px;
+            max-height: 200px;
+            overflow-y: auto;
+            position: relative;
+            z-index: 1;
+            white-space: pre-wrap;
+            word-break: break-all;
+            line-height: 1.6;
+        }
+
+        .output-box .success {
+            color: #00ffc8;
+        }
+
+        .output-box .error {
+            color: #ff4466;
+        }
+
+        .output-box .info {
+            color: #60a5fa;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 24px;
+            font-size: 11px;
+            color: rgba(255, 255, 255, 0.1);
+            letter-spacing: 2px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .footer span {
+            color: rgba(255, 255, 255, 0.05);
+        }
+
+        .glow-line {
+            width: 100%;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(0, 255, 200, 0.1), transparent);
+            margin: 20px 0;
+            position: relative;
+            z-index: 1;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 2px 12px;
+            border-radius: 20px;
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            background: rgba(0, 255, 200, 0.1);
+            color: #00ffc8;
+            border: 1px solid rgba(0, 255, 200, 0.1);
+            margin-bottom: 8px;
+        }
+
+        @media (max-width: 480px) {
+            .container { padding: 24px; }
+            .header h1 { font-size: 22px; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header">
+        <span class="icon">⚡</span>
+        <h1>ALIGHT PREMIUM</h1>
+        <p>Cyber Activation · 1 Year</p>
+        <div style="margin-top: 8px;">
+            <span class="badge">🔓 UNLOCKED</span>
+        </div>
+    </div>
+
+    <div class="status-bar">
+        <span class="dot"></span>
+        <span><span class="label">FARZHDYTL PREM</span> · READY</span>
+        <span style="margin-left: auto; opacity: 0.4;">v2.0</span>
+    </div>
+
+    <div class="step-indicator">
+        <div class="step active" id="step1">
+            <span class="num">1</span> Kirim Link
+        </div>
+        <span class="divider">▸</span>
+        <div class="step" id="step2">
+            <span class="num">2</span> Aktivasi
+        </div>
+    </div>
+
+    <!-- STEP 1: Kirim Email -->
+    <div id="step1Form">
+        <div class="form-group">
+            <label>📧 Email Target</label>
+            <input type="email" id="emailInput" placeholder="you@email.com">
+        </div>
+        <button class="btn" id="sendBtn">Kirim Magic Link</button>
+    </div>
+
+    <!-- STEP 2: Verify Link -->
+    <div id="step2Form" style="display:none;">
+        <div class="form-group">
+            <label>🔗 Link Verifikasi</label>
+            <input type="text" id="linkInput" placeholder="https://www.alightpro.my.id/verify?oob=xxx">
+        </div>
+        <button class="btn" id="verifyBtn">Aktivasi Premium</button>
+        <button class="btn btn-secondary" id="backBtn">← Kembali</button>
+    </div>
+
+    <div class="glow-line"></div>
+
+    <div class="output-box" id="outputBox">
+        <span style="opacity:0.3;">▸ Siap menerima perintah...</span>
+    </div>
+
+    <div class="footer">
+        FARZ HDYTL FOOTER · <span>DARK CYBER v2.0</span>
+    </div>
+</div>
+
+<script>
+    (function() {
+        // ============ REAL BACKEND ============
+        const CONFIG = {
+            baseUrl: 'https://www.alightpro.my.id',
+            secret: 'amprem-human-v3-secret-2026',
+            userAgent: 'Mozilla/5.0 (Linux; Android 13) AppleWebKit/537.36 (Chrome/120)',
+            timeout: 45000
+        };
+
+        // ============ CRYPTO UTILS ============
+        async function sha256(message) {
+            const msgBuffer = new TextEncoder().encode(message);
+            const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
+            const hashArray = Array.from(new Uint8Array(hashBuffer));
+            return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+        }
+
+        // ============ SESSION ============
+        async function getSession() {
+            const controller = new AbortController();
+            const timeoutId = setTimeout(() => controller.abort(), CONFIG.timeout);
+
+            try {
+                const res = await fetch(CONFIG.baseUrl + '/api/session', {
+                    signal: controller.signal,
+                    headers: {
+                        'X-Requested-With': 'XMLHttpRequest',
+                        'Cache-Control': 'no-store',
+                        'User-Agent': CONFIG.userAgent,
+                        'Origin': CONFIG.baseUrl,
+                        'Referer': CONFIG.baseUrl + '/',
+                        'Accept': 'application/json'
+                    }
+                });
+                clearTimeout(timeoutId);
+                if (!res.ok) throw new Error('Session HTTP ' + res.status);
+
+                const cookie = (res.headers.get('set-cookie') || '').split(';')[0];
+                const data = await res.json();
+                if (!data.status || !data.token || !data.nonce) {
+                    throw new Error('Session token/nonce tidak valid');
+                }
+                return {
+                    sessionId: data.sessionId,
+                    token: data.token,
+                    nonce: data.nonce,
+                    timestamp: data.timestamp,
+                    cookie: cookie
+                };
+            } catch (e) {
+                clearTimeout(timeoutId);
+                throw e;
+            }
+        }
+
+        // ============ POW SOLVER ============
+        async function solvePow(params) {
+            const { sessionId, nonce, timestamp, email, action, humanProof } = params;
+            const difficulty = '0000';
+            const base = sessionId + ':' + nonce + ':' + timestamp + ':' + email.toLowerCase() + ':' + action + ':' + humanProof + ':';
+
+            for (let i = 0; i < 500000; i++) {
+                const hash = await sha256(base + i);
+                if (hash.startsWith(difficulty)) return String(i);
+            }
+            return Date.now().toString();
+        }
+
+        // ============ CALL ALIGHT API ============
+        async function callAlight(body) {
+            const s = await getSession();
+            const delay = 2300 - (Date.now() - parseInt(s.timestamp, 10));
+            if (delay > 0) await new Promise(r => setTimeout(r, delay));
+
+            const humanProof = await sha256(`human:${s.sessionId}:${s.nonce}:${s.timestamp}:${body.email.toLowerCase()}:5:${CONFIG.secret}`);
+            const pow = await solvePow({ ...s, email: body.email, action: body.action, humanProof });
+
+            const controller = new AbortController();
+            const timeoutId = setTimeout(() => controller.abort(), CONFIG.timeout);
+
+            try {
+                const res = await fetch(CONFIG.baseUrl + '/api/alight-motion', {
+                    method: 'POST',
+                    signal: controller.signal,
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-Requested-With': 'XMLHttpRequest',
+                        'X-Amprem-Token': s.token,
+                        'X-Amprem-Nonce': s.nonce,
+                        'X-Amprem-Pow': pow,
+                        'X-Amprem-Human-Proof': humanProof,
+                        'Cookie': s.cookie,
+                        'User-Agent': CONFIG.userAgent,
+                        'Origin': CONFIG.baseUrl,
+                        'Referer': CONFIG.baseUrl + '/',
+                        'Accept': 'application/json'
+                    },
+                    body: JSON.stringify(body)
+                });
+                clearTimeout(timeoutId);
+
+                const text = await res.text();
+                let data;
+                try { data = JSON.parse(text); } catch (e) { data = { success: false, error: 'non-json ' + res.status }; }
+                return { http: res.status, data: data };
+            } catch (e) {
+                clearTimeout(timeoutId);
+                throw e;
+            }
+        }
+
+        // ============ SEND MAGIC LINK ============
+        async function sendMagicLink(email) {
+            const result = await callAlight({ action: 'send', email: email });
+            if (!result.data.status) {
+                return { ok: false, message: result.data.msg || 'HTTP ' + result.http };
+            }
+            return { ok: true, message: result.data.msg || 'Link berhasil dikirim' };
+        }
+
+        // ============ APPLY PREMIUM ============
+        async function applyPremium(email, link) {
+            const result = await callAlight({ action: 'verify', email: email, link: link.trim() });
+            if (!result.data.status || !result.data) {
+                return { ok: false, message: result.data.msg || 'HTTP ' + result.http };
+            }
+            const premium = result.data.premium && result.data.premium.result;
+            return {
+                ok: true,
+                message: result.data.msg || 'Premium activated!',
+                data: result.data,
+                accountLinkStatus: premium && premium.accountLinkStatus,
+                expiryTimeMillis: premium && premium.expiryTimeMillis,
+                autoRenewing: premium && premium.autoRenewing
+            };
+        }
+
+        // ============ UI LOGIC ============
+        const state = { email: '', link: '', step: 1, loading: false };
+
+        const step1El = document.getElementById('step1');
+        const step2El = document.getElementById('step2');
+        const step1Form = document.getElementById('step1Form');
+        const step2Form = document.getElementById('step2Form');
+        const emailInput = document.getElementById('emailInput');
+        const linkInput = document.getElementById('linkInput');
+        const sendBtn = document.getElementById('sendBtn');
+        const verifyBtn = document.getElementById('verifyBtn');
+        const backBtn = document.getElementById('backBtn');
+        const outputBox = document.getElementById('outputBox');
+
+        function log(msg, type = 'info') {
+            const colors = { success: '#00ffc8', error: '#ff4466', info: '#60a5fa' };
+            const prefix = type === 'success' ? '✅ ' : type === 'error' ? '❌ ' : 'ℹ️ ';
+            outputBox.innerHTML = `<span style="color:${colors[type] || '#aaa'}">${prefix}${msg}</span>`;
+        }
+
+        function appendLog(msg, type = 'info') {
+            const colors = { success: '#00ffc8', error: '#ff4466', info: '#60a5fa' };
+            const prefix = type === 'success' ? '✅ ' : type === 'error' ? '❌ ' : 'ℹ️ ';
+            outputBox.innerHTML += `\n<span style="color:${colors[type] || '#aaa'}">${prefix}${msg}</span>`;
+            outputBox.scrollTop = outputBox.scrollHeight;
+        }
+
+        function setStep(step) {
+            state.step = step;
+            if (step === 1) {
+                step1Form.style.display = 'block';
+                step2Form.style.display = 'none';
+                step1El.classList.add('active');
+                step2El.classList.remove('active');
+                sendBtn.textContent = 'Kirim Magic Link';
+            } else {
+                step1Form.style.display = 'none';
+                step2Form.style.display = 'block';
+                step1El.classList.remove('active');
+                step2El.classList.add('active');
+                verifyBtn.textContent = 'Aktivasi Premium';
+            }
+        }
+
+        // ============ HANDLE SEND ============
+        async function handleSend() {
+            if (state.loading) return;
+            const email = emailInput.value.trim();
+            if (!email || !email.includes('@')) {
+                log('Email tidak valid!', 'error');
+                return;
+            }
+
+            state.email = email;
+            state.loading = true;
+            sendBtn.disabled = true;
+            sendBtn.textContent = '⏳ Mengirim...';
+            log('Mengirim magic link ke ' + email + ' ...', 'info');
+
+            try {
+                const result = await sendMagicLink(email);
+                if (result.ok) {
+                    log(result.message, 'success');
+                    setStep(2);
+                    appendLog('📌 Paste link dari email ke form di bawah.', 'info');
+                    linkInput.placeholder = 'https://www.alightpro.my.id/verify?oob=xxx';
+                } else {
+                    log('❌ ' + result.message, 'error');
+                }
+            } catch (e) {
+                log('Error: ' + e.message, 'error');
+            }
+
+            state.loading = false;
+            sendBtn.disabled = false;
+            sendBtn.textContent = 'Kirim Magic Link';
+        }
+
+        // ============ HANDLE VERIFY ============
+        async function handleVerify() {
+            if (state.loading) return;
+            const link = linkInput.value.trim();
+            if (!link || !link.includes('oob=')) {
+                log('Link tidak valid! Harus contain "oob="', 'error');
+                return;
+            }
+
+            state.link = link;
+            state.loading = true;
+            verifyBtn.disabled = true;
+            verifyBtn.textContent = '⏳ Verifikasi...';
+            log('Memverifikasi link...', 'info');
+
+            try {
+                const result = await applyPremium(state.email, link);
+                if (result.ok) {
+                    const p = result.data?.premium?.result;
+                    const expiry = p?.expiryTimeMillis ? new Date(p.expiryTimeMillis).toLocaleString('id-ID') : '1 Tahun';
+                    log('✅ SUKSES AKTIVASI!', 'success');
+                    appendLog(`📧 Email: ${state.email}`, 'info');
+                    appendLog(`🔒 Status: ${p?.accountLinkStatus || 'ACTIVE'}`, 'info');
+                    appendLog(`⏳ Expired: ${expiry}`, 'info');
+                    appendLog(`🔄 Auto Renew: ${p?.autoRenewing ? 'Yes' : 'No'}`, 'info');
+                    appendLog('🎉 Premium 1 Tahun aktif!', 'success');
+                } else {
+                    log('❌ ' + (result.message || 'Gagal aktivasi'), 'error');
+                }
+            } catch (e) {
+                log('Error: ' + e.message, 'error');
+            }
+
+            state.loading = false;
+            verifyBtn.disabled = false;
+            verifyBtn.textContent = 'Aktivasi Premium';
+        }
+
+        function handleBack() {
+            setStep(1);
+            log('Kembali ke step kirim link.', 'info');
+        }
+
+        // ============ EVENT BINDING ============
+        sendBtn.addEventListener('click', handleSend);
+        verifyBtn.addEventListener('click', handleVerify);
+        backBtn.addEventListener('click', handleBack);
+
+        emailInput.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') handleSend();
+        });
+        linkInput.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') handleVerify();
+        });
+
+        log('🔓 Siap aktivasi Alight Motion Premium 1 Tahun.', 'info');
+        appendLog('📌 Step 1: Masukkan email, kirim magic link.', 'info');
+        appendLog('📌 Step 2: Paste link dari email, aktivasi.', 'info');
+
+        console.log('EYE-GPT · Alight Premium Activator Loaded.');
+    })();
+</script>
+</body>
+</html>
